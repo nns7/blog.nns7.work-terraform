@@ -44,7 +44,7 @@ resource "aws_cloudfront_distribution" "hugo" {
 
   viewer_certificate {
     cloudfront_default_certificate = false ## ACMで作成した証明書を使用するため無効
-    acm_certificate_arn            = "arn:aws:acm:${var.aws_region}:${var.aws_account_id}:certificate/${var.certificate_id}"
+    acm_certificate_arn            = "arn:aws:acm:us-east-1:${var.aws_account_id}:certificate/${var.certificate_id}"
     ssl_support_method             = "sni-only"
     minimum_protocol_version       = var.minimum_viewer_tls_version
   }
