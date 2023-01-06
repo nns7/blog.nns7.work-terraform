@@ -13,11 +13,6 @@ variable "origin_ssl_protocols" {
   default = ["TLSv1.2"]
 }
 
-variable "origin_path" {
-  type    = string
-  default = "/public"
-}
-
 variable "aws_region" {
   type    = string
   default = "us-west-2"

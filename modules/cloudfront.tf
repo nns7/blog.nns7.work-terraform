@@ -12,7 +12,6 @@ resource "aws_cloudfront_distribution" "hugo" {
   origin {
     origin_id                = aws_s3_bucket.hugo.id
     domain_name              = aws_s3_bucket.hugo.bucket_regional_domain_name
-    origin_path              = var.origin_path
     origin_access_control_id = aws_cloudfront_origin_access_control.hugo.id
   } 
 
