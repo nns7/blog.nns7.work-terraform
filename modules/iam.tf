@@ -14,6 +14,7 @@ data "aws_iam_policy_document" "s3_hugo_policy" {
 
     ## アクセス先の設定
     resources = [
+      "${aws_s3_bucket.hugo.arn}",
       "${aws_s3_bucket.hugo.arn}/*"
     ]
 
@@ -67,8 +68,11 @@ resource "aws_iam_role" "github_actions" {
 
 data "aws_iam_policy_document" "hugo_s3_push" {
   statement {
-    actions   = ["s3:ListBucket", "s3:PutObject"]
-    resources = ["${aws_s3_bucket.hugo.arn}/*"]
+    actions = ["s3:ListBucket", "s3:PutObject"]
+    resources = [
+      "${aws_s3_bucket.hugo.arn}",
+      "${aws_s3_bucket.hugo.arn}/*"
+    ]
   }
 }
 
