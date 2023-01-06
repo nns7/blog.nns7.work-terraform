@@ -8,12 +8,15 @@ resource "aws_cloudfront_distribution" "hugo" {
   price_class         = var.cf_price_class
   http_version        = "http2"
 
+  ## CloudFrontの代替ドメイン（CNAME）設定
+  aliases = ["blog.nns7.work"]
+
   ## オリジンの設定
   origin {
     origin_id                = aws_s3_bucket.hugo.id
     domain_name              = aws_s3_bucket.hugo.bucket_regional_domain_name
     origin_access_control_id = aws_cloudfront_origin_access_control.hugo.id
-  } 
+  }
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
