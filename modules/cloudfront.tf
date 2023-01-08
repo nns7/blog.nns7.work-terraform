@@ -1,4 +1,3 @@
-
 # --------------------------------
 # CloudFront
 resource "aws_cloudfront_distribution" "hugo" {
@@ -36,6 +35,11 @@ resource "aws_cloudfront_distribution" "hugo" {
     min_ttl                = var.cf_min_ttl
     default_ttl            = var.cf_default_ttl
     max_ttl                = var.cf_max_ttl
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.add-index-function.arn
+    }
   }
 
   restrictions {
@@ -58,4 +62,15 @@ resource "aws_cloudfront_origin_access_control" "hugo" {
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
+}
+
+
+# --------------------------------
+# CloudFront Functions
+resource "aws_cloudfront_function" "add-index-function" {
+  name    = "add-index-function"
+  runtime = "cloudfront-js-1.0"
+  comment = "Add index.html to the path"
+  publish = true
+  code    = file("${path.module}/addIndexFunction.js")
 }
