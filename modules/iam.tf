@@ -68,7 +68,11 @@ resource "aws_iam_role" "github_actions" {
 
 data "aws_iam_policy_document" "hugo_s3_push" {
   statement {
-    actions = ["s3:ListBucket", "s3:PutObject"]
+    actions = [
+      "s3:ListBucket",
+      "s3:PutObject",
+      "s3:DeleteObject"
+    ]
     resources = [
       "${aws_s3_bucket.hugo.arn}",
       "${aws_s3_bucket.hugo.arn}/*"
